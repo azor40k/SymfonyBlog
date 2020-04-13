@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use App\Repository\CategoryRepository;
 
@@ -19,12 +20,10 @@ class IndexController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(CategoryRepository $categoryRepository)
+    public function index(CategoryRepository $categoryRepository, ArticleRepository $articleRepository)
     {
-
-        $em = $this->getDoctrine()->getManager();
-        $categories = $categoryRepository->findAllPublishedOrderedByNewest();
-        $articles = $em->getRepository(Article::class)->findAll();
+        $categories = $categoryRepository->findAllCategoryOrderedByNewest();
+        $articles = $articleRepository->findArticlePublishedOrderedByNewest();
         return $this->render('index/index.html.twig', [
             'categories' => $categories,
             'articles' => $articles,
@@ -32,21 +31,17 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/parcat/{id}", name="cat")
+     * @Route("/parcat/{id}", name="parcat")
     */
-    public function affichage(Category $category, CategoryRepository $categoryRepository)
+    public function affichage(Category $category, CategoryRepository $categoryRepository, ArticleRepository $articleRepository)
     {
-        $title = $category;
-        $em = $this->getDoctrine()->getManager();
-        $categories=$categoryRepository->findAllPublishedOrderedByNewest();
-        $articles=$em->getRepository(Article::class)->findBy(['category' => $category]);
-
-        $title = $category;
+        $categories=$categoryRepository->findAllCategoryOrderedByNewest();
+        $articles=$articleRepository->findArticlePublishedOrderedByNewestCategory($category);
 
         return $this->render('index/parcat.html.twig', [
             'articles' => $articles,
             'categories' => $categories,
-            'title' => $title,
+            'title' => $category,
         ]);
     }
 

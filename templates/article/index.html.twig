@@ -23,7 +23,31 @@
     <tbody>
         {% for article in articles %}
         <tr>
-            <td>X</td>
+            <td>
+
+                {% set total_note = 0 %}
+                {% set n = 0 %}
+
+                {% for comments in comment %}
+                {% if comments.article.id == article.id %}
+
+                {% set total_note = total_note + comments.note %}
+                {% set n = n + 1 %}
+                {% endif %}
+
+                {% endfor %}
+                {% if n == 0  %}{% set total_note = 0 %}
+                {% else %}
+                {% set total_note = total_note / n %}
+                {% endif %}
+
+                {% if total_note == 0 %}
+                pas de note
+                {% else %}
+                {{total_note}}
+                {% endif %}
+
+            </td>
             <td>{{ article.title }}</td>
             <td>{{ article.category.title }}</td>
             <td>
@@ -42,7 +66,8 @@
                 {% else %}
                 <h4><a class="btn btn-secondary" href=" {{ path('published', {'id': article.id})}} ">Hide
                         article</h4></a>
-                {% endif %}</td><td>
+                {% endif %}</td>
+            <td>
                 <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
                 {% if article.author.id == app.user.id %}
                 <a href="{{ path('artown_edit', {'id': article.id}) }}">edit</a>

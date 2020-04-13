@@ -9,7 +9,10 @@
     </head>
     <style>
     #alert{position:absolute; z-index:9999;left:44%;}
-    nav #hide{display:none;}
+    nav #hide, nav #hide1{display:none;}
+    .menu {display: flex;flex-direction: row;}
+    li {padding-left: 10px;}
+    </style>
     </style>
 
     <body>
@@ -59,6 +62,8 @@
             }, 2000);}
             function show() {document.getElementById("hide").style.display = "flex";}
             function out() {document.getElementById("hide").style.display = "none";}
+            function show1() {document.getElementById("hide1").style.display = "flex";}
+            function out1() {document.getElementById("hide1").style.display = "none";}
         </script>        
         {% endblock %}
     </body>

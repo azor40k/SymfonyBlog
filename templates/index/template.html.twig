@@ -1,0 +1,6 @@
+{% for article in articles %}
+    <a href="{{ path('artishow',{'id':article.id}  ) }}">
+    <img src="{{ asset('upload/artdefault.jpg')}}" style="object-fit: cover;width:450px;height:300px;border-radius:20%"/><br>
+    {{article.title}} | {{article.author.nom}}<a>
+    <br/><br/><br/>
+{% endfor %}

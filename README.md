@@ -1,7 +1,7 @@
+
 # SymfonyBlog
 Apprentissage Laravel,
 
 Création d'un blog avec:
-Roles, profile, page d'accueil, création de post à condition et de commenter les posts
 
-non terminé
+backlog, profile, création/gestion d'article afficher, commentaire et notation d'article, gestion de role,

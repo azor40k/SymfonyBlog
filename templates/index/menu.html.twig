@@ -2,6 +2,13 @@
     <ul class="navbar-nav">
         <li><a class="nav-link" href=" {{ path('index') }} ">EN AVANT</a></li>
         <li><a class="nav-link" href=" {{ path('index') }} ">TOUT</a></li>
-        <li><a class="nav-link" href=" {{ path('index') }} "></a></li>
+        <div onmouseover="show1()"  onmouseout="out1()">
+        <li class="nav-link" >Latest Category :</li>
+        <ul class="navbar-nav" id="hide1">
+        {% for category in categories %}
+        <li><a class="nav-link" href="{{ path('parcat',{'id':category.id}  ) }}">{{category.title}}</a></li>
+        {% endfor %}
+        </ul>
+        </div>
     </ul>
-</nav>
+</nav><br/>

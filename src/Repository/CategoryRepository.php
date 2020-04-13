@@ -19,9 +19,9 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    public function findAllPublishedOrderedByNewest(){
+    public function findAllCategoryOrderedByNewest(){
         return $this->createQueryBuilder('c')
-            ->orderBy('c.title', 'DESC')
+            ->orderBy('c.id', 'DESC')
             ->setMaxResults(3)
             ->getQuery()
             ->getResult()
