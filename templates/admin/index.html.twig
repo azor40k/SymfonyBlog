@@ -1,0 +1,83 @@
+{% extends "base.html.twig" %}
+{% block title %}ADMINISTRATION{% endblock %}
+{% block body %}
+{{ include('admin/table-scroll.html.twig') }}
+{{ include('admin/admin-menu.html.twig') }}
+
+<h1 class="text-center">Users List</h1>
+
+{% if users is not empty %}
+<table class="table text-center" border="0">
+
+    <thead>
+        <tr>
+            <th>{{users|length }}</th>
+            <th>Profile Picture</th>
+            <th>E-Mail</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Role</th>
+            <th>Permission</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>
+                {% if user.id == app.user.id %}
+                You
+                {% else %}
+                {% endif %}
+            </td>
+            <td><img src="{{ asset('upload/profile/'~user.picture)}}"
+                    style="object-fit: cover;width:40px;height:40px;border-radius:50%" /></td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.nom|upper }}</td>
+            <td>{{ user.prenom|capitalize }}</td>
+            <td>
+                {% if user.roles|length == 3 %}
+                <span class="text-success">ADMINISTRATOR</span>
+                {% elseif user.roles|length == 2 %}
+                <span class="text-warning">AUTHOR</span>
+                {% else %}
+                <span class="text-primary">User</span>
+                {% endif %}
+            </td>
+            {% if user.id != app.user.id %}
+            <td>
+
+                {% if user.roles == ['ROLE_USER','ROLE_AUTHOR','ROLE_ADMIN'] %}
+                <a class="btn btn-warning"href=" {{ path('editRolePerm', {'id': user.id}) }}"> set Author </a>
+                <a class="btn btn-primary"href=" {{ path('user_editRole', {'id': user.id}) }}"> set User </a>
+                {% elseif user.roles == ['ROLE_USER'] %}
+                <a class="btn btn-success"href=" {{ path('user_editRole', {'id': user.id}) }}"> set Admin </a>
+                <a class="btn btn-warning"href=" {{ path('editRolePerm', {'id': user.id}) }}"> set Author </a>
+                {% else %}
+                <a class="btn btn-success"href=" {{ path('user_editRole', {'id': user.id}) }}"> set Admin </a>
+                <a class="btn btn-primary"href=" {{ path('editRolePerm', {'id': user.id}) }}"> set User </a>
+                
+                {% endif %}
+
+            </td>
+            <td>
+            {% if user.roles != ['ROLE_USER','ROLE_AUTHOR','ROLE_ADMIN'] %}
+                <a class="btn btn-danger" href=" {{ path('user_delete', {'id': user.id }) }} ">Delete</a>
+            {% endif %}
+            </td>
+            {% else %}
+            <td></td>
+            <td></td>
+            {% endif %}
+
+
+            {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<p>no users</p>
+{% endif %}
+
+{% endblock %}

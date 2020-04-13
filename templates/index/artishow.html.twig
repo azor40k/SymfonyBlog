@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UN ARTICLE{% endblock %}
+
+{% block body %}
+<div>
+    <h2>{{ article.title }} <span>| {{ article.category }}</span></h2>
+    
+    <p>{{ article.content }}</p>
+
+    <p>Par: {{article.author.email}}</p>
+</div>
+{% if comment is not empty  %}
+
+{% set total_note = 0 %}
+{% set n = 0 %}
+{% for comments in comment %}
+    {% set total_note = total_note + comments.note %} 
+    {% set n = n + 1 %} 
+{% endfor %}
+{% set total_note = total_note / n %}
+{{total_note}}
+{% else %}
+    
+   pas de notes
+
+{% endif %}
+
+<br>
+-------------------------------------------------------------------------
+<h4>Commenter l'article</h4>
+{% if app.user is not null %}
+{{ form(form_comment) }}
+{% else %}
+    <span>Connectez-vous pour laisser un commentaire</span><br/>
+    <a href="{{ path('app_login') }}"> Connexion</a>/<a href="{{ path('app_register') }}">Inscription</a>    
+{% endif %}
+<br/>
+-------------------------------------------------------------------------
+<h4>Espace Commentaire</h4> 
+{% for comments in comment %}
+
+
+
+
+
+
+<p>{{comments.comment}} | {{comments.author}} | {{comments.article}} | {{comments.datepublished|date('d-m-Y')}}</p>
+<p>{{comments.note}} / 5</p>
+{% endfor %}
+{% endblock %}

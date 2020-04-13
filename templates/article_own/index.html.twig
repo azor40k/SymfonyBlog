@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Articles{% endblock %}
+
+{% block body %}
+{{ include('admin/table-scroll.html.twig') }}
+<h1>My Articles | {{ articles|length }}</h1>
+<hr>
+<table class="table">
+        <thead>
+            <tr>
+                
+                <th>Title</th>
+                <th>Category</th>
+                <th>Score</th>
+                <th>Created</th>
+                <th>Published</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>               
+                <td>{{ article.title }}</td>
+                
+                
+                <td>
+                {% if article.category is not  null %}{{ article.category.title }}
+                {% endif %}</td>
+                <td>X</td>
+                <td>{{ article.dateCreated ? article.dateCreated|date('d/m/Y') : '' }}</td>
+                <td>{{ article.datePublished ? article.datePublished|date('d/m/Y') : '' }}</td>
+
+                {# <td><a href=" {{path('artown_published', {'id': article.id}) }}">Published</a></td> #}
+                <td>
+                    <a href="{{ path('artown_show', {'id': article.id}) }}">show</a>
+                    <a href="{{ path('artown_edit', {'id': article.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<hr>
+{{ form_start(form_new_own) }}
+    {{ form_widget(form_new_own) }}
+    <button class="btn btn-success">{{ button_label|default('Create Article') }}</button><br/>
+{{ form_end(form_new_own) }}
+
+
+{% endblock %}

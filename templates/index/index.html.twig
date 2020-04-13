@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil Blog{% endblock %}
+
+{% block body %}
+<style>
+    .menu {display: flex;flex-direction: row;}
+    li {padding-left: 10px;}
+</style>
+{{ include('index/menu.html.twig') }}
+
+
+<ul>
+    {% for article in articles %}
+    <li><a href="{{ path('artishow',{'id':article.id}  ) }}">{{article.title}} | {{article.category}}<a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

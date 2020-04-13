@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+<h1>Article</h1>
+{% if article.state == null %}
+<h4><a class="btn btn-success" href=" {{ path('article_published', {'id': article.id})}} ">Publish article</h4></a>
+{% else %}
+<h4><a class="btn btn-secondary" href=" {{ path('article_published', {'id': article.id})}} ">Hide article</h4></a>
+{% endif %}
+
+
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Title</th>
+            <td>{{ article.title }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ article.content }}</td>
+        </tr>
+        <tr>
+            <th>Date_created</th>
+            <td>{{ article.dateCreated ? article.dateCreated|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Date_published</th>
+            <td>{{ article.state ? article.datePublished|date('d/m/Y  H:i:s') : 'No' }}</td>
+        </tr>
+
+        <tr>
+            <th>
+                {% if article.author.id == app.user.id %}
+                <a class="btn btn-primary" href="{{ path('artown_edit', {'id': article.id}) }}">edit</a>
+                {% endif %}</th>
+            <td>{{ include('article/_delete_form.html.twig') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<br />
+{% if is_granted('ROLE_ADMIN') %}
+<a class="btn btn-warning" href="{{ path('article_index') }}">back to all article</a>
+<a class="btn btn-info" href="{{ path('article_own') }}">back to my article</a>
+{% else %}
+<a href="{{ path('article_own') }}">back to article</a>
+{% endif %}
+
+{% endblock %}

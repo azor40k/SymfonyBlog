@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Profile Edit | {{app.user.prenom}} {{app.user.nom}} {% endblock %}
+
+{% block body %}
+<style>
+
+</style>
+
+<div class="main-profile-edit text-center"><br/>
+<h1 class="font-weight-bold">Profile Edit Page</h1><br/>
+
+{{ form_start(form_editUser) }}
+
+        {{ form_row(form_editUser.picture) }}        
+        {{ form_row(form_editUser.nom) }}
+        {{ form_row(form_editUser.prenom) }}
+        {{ form_row(form_editUser.email) }}
+
+        <a href=" {{ path('profile') }} "><button class="btn btn-secondary">Back to Profile</button></a>
+        <button class="btn btn-primary">Save Changes</button>
+{{ form_end(form_editUser) }}
+
+
+</div>
+{% endblock %}

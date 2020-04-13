@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article List{% endblock %}
+
+{% block body %}
+{{ include('admin/table-scroll.html.twig') }}
+{{ include('admin/admin-menu.html.twig') }}
+<h1>Article List | {{ articles|length }}</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Score</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Author</th>
+            <th>Created</th>
+            <th>Published</th>
+            <th>Actions</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <td>X</td>
+            <td>{{ article.title }}</td>
+            <td>{{ article.category.title }}</td>
+            <td>
+                {% if article.author.id == app.user.id %}
+                <span class="text-danger font-weight-bold">You</span>
+                {% else %}
+                {{ article.author.nom|upper }} {{ article.author.prenom|capitalize }}
+                {% endif %}
+            </td>
+            <td>{{ article.dateCreated ? article.dateCreated|date('d/m/Y') : '' }}</td>
+            <td>{{ article.state ? article.datePublished|date('d/m/Y') : 'No' }}</td>
+            <td>
+                {% if article.state == null %}
+                <h4><a class="btn btn-success" href=" {{ path('published', {'id': article.id})}} ">Publish
+                        article</h4></a>
+                {% else %}
+                <h4><a class="btn btn-secondary" href=" {{ path('published', {'id': article.id})}} ">Hide
+                        article</h4></a>
+                {% endif %}</td><td>
+                <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
+                {% if article.author.id == app.user.id %}
+                <a href="{{ path('artown_edit', {'id': article.id}) }}">edit</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7">no records found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
