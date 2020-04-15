@@ -23,8 +23,21 @@ class IndexController extends AbstractController
     public function index(CategoryRepository $categoryRepository, ArticleRepository $articleRepository)
     {
         $categories = $categoryRepository->findAllCategoryOrderedByNewest();
-        $articles = $articleRepository->findArticlePublishedOrderedByNewest();
+        $articles = $articleRepository->findHome();
         return $this->render('index/index.html.twig', [
+            'categories' => $categories,
+            'articles' => $articles,
+        ]);
+    }
+
+    /**
+     * @Route("/artall", name="artall")
+     */
+    public function artall(CategoryRepository $categoryRepository, ArticleRepository $articleRepository)
+    {
+        $categories = $categoryRepository->findAllCategoryOrderedByNewest();
+        $articles = $articleRepository->findArticlePublishedOrderedByNewest();
+        return $this->render('index/artall.html.twig', [
             'categories' => $categories,
             'articles' => $articles,
         ]);

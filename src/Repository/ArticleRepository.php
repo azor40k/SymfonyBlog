@@ -41,6 +41,17 @@ class ArticleRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findHome(){
+        return $this->createQueryBuilder('a')
+            ->where('a.home IS NOT NULL')
+            ->andwhere('a.state != false')
+            ->orderBy('a.home', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */

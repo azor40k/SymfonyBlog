@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SondageController!{% endblock %}
+
+{% block body %}
+
+
+<div>
+    <h1>Sondage Disponible</h1>
+
+    {% for question in questions %}
+
+    <a href=" {{ path('questshow', {'id': question.id}) }} ">{{ question.title }}</a>
+        
+    {% endfor %}
+
+</div>
+{% endblock %}

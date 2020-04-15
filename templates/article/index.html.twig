@@ -28,12 +28,10 @@
                 {% set total_note = 0 %}
                 {% set n = 0 %}
 
-                {% for comments in comment %}
-                {% if comments.article.id == article.id %}
+                {% for comments in article.comments %}
 
                 {% set total_note = total_note + comments.note %}
                 {% set n = n + 1 %}
-                {% endif %}
 
                 {% endfor %}
                 {% if n == 0  %}{% set total_note = 0 %}

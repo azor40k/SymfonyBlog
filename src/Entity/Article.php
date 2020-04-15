@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
  */
 class Article
@@ -61,6 +63,11 @@ class Article
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article")
      */
     private $comments;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $home;
 
     public function __construct()
     {
@@ -190,5 +197,17 @@ class Article
    public function __toString()
    {
        return $this->getTitle();
+   }
+
+   public function getHome(): ?int
+   {
+       return $this->home;
+   }
+
+   public function setHome(?int $home): self
+   {
+       $this->home = $home;
+
+       return $this;
    }
 }

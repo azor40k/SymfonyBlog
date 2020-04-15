@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sondage : {{ question.title }} !{% endblock %}
+
+{% block body %}
+
+
+<div>
+    <h1>Sondage : {{ question.title }}</h1>
+
+    <h2>{{question.answers|length}} Choix </h2><br>
+
+    {% set x = 0 %}
+    {% for tt in answer %}
+    {% if tt.question.id == question.id %}    
+    {% set x = x + tt.score %}
+    {% endif %}
+    {% endfor %}
+
+    <h3>{{x}} personnes on fait leur choix</h3>
+
+    {% for item in answer %}
+
+    
+
+    <h4><a href=" {{path('scoreadd', {'id' : item.id })}} " >{{item.title}}</a> 
+    
+    
+    <span>{{ ((item.score * 100) / x)|number_format(2)  }}%</span></h4> <br/>
+        
+    {% endfor %}
+
+
+
+</div>
+{% endblock %}

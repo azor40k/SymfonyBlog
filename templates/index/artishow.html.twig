@@ -10,11 +10,11 @@
 
     <p>Par: {{article.author.email}}</p>
 </div>
-{% if comment is not empty  %}
+{% if article.comments is not empty  %}
 
 {% set total_note = 0 %}
 {% set n = 0 %}
-{% for comments in comment %}
+{% for comments in article.comments %}
     {% set total_note = total_note + comments.note %} 
     {% set n = n + 1 %} 
 {% endfor %}
